@@ -71,12 +71,12 @@ public class Main {
                     Random random = new Random();
                     int r = random.nextInt(100);
                     // é sorteado o valor da aposta, sendo que o r tem que ser de 25, para dar mais realidade ao VPIP
-                    if (valorAposta == 0) { // verifica se não há apostas previas, pois caso hajá os jodaores não poderam
+                    if (valorAposta == 0) { // verifica se não há apostas previas, pois caso hajá os jogaores não poderam
                         // dar 3bet
                         if (r < 25) {
                             if (playersNaMesa.get(j).stack > 0 && playersNaMesa.get(j).stack > valorDoBB) { // verifica que o jogador tem stack efetiva
                                 // o valor minimo de aposta, deve ser de 1 Big Blind, e no maximo um all in
-                                valorAposta = valorDoBB + random.nextInt(playersNaMesa.get(j).stack - valorDoBB + 1);
+                                valorAposta = valorDoBB + random.nextInt(valorDoBB * 100);
                                 playersNaMesa.get(j).stack -= valorAposta; // desconta aposta do stack
                                 tamanhoDoPote += valorAposta; // almenta o tamanhoDoPote
                                 listaDeApostadores.add(j); // adiciona o indice do jogador na lista
@@ -149,15 +149,15 @@ public class Main {
     }
 
     private static void encherMesa(ArrayList<Players> playersNaMesa) {
-        playersNaMesa.add(new Players("player1", 3000));
-        playersNaMesa.add(new Players("player2", 3000));
-        playersNaMesa.add(new Players("player3", 3000));
-        playersNaMesa.add(new Players("player4", 3000));
-        playersNaMesa.add(new Players("player5", 3000));
-        playersNaMesa.add(new Players("player6", 3000));
-        playersNaMesa.add(new Players("player7", 3000));
-        playersNaMesa.add(new Players("player8", 3000));
-        playersNaMesa.add(new Players("player9", 3000));
+        playersNaMesa.add(new Players("player1", 30000));
+        playersNaMesa.add(new Players("player2", 30000));
+        playersNaMesa.add(new Players("player3", 30000));
+        playersNaMesa.add(new Players("player4", 30000));
+        playersNaMesa.add(new Players("player5", 30000));
+        playersNaMesa.add(new Players("player6", 30000));
+        playersNaMesa.add(new Players("player7", 30000));
+        playersNaMesa.add(new Players("player8", 30000));
+        playersNaMesa.add(new Players("player9", 30000));
     }
 
     public static class Players{
