@@ -40,7 +40,7 @@ public class Main {
         }
         MesaDePoker mesaDePoker = new MesaDePoker();
 
-       mesaDePoker.maoDePoker();
+       mesaDePoker.loopDeMaos();
     }
 
 

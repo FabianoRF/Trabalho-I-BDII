@@ -5,17 +5,22 @@ import java.util.Random;
 
 public class MesaDePoker {
     private final int NUMERO_DE_INSCRITOS = 9;
+    private ArrayList<Players> playersNoCampeonato = new ArrayList<>();
+    ArrayList<Players> playersNaMesa = new ArrayList<>();
 
     public MesaDePoker() {
     }
 
-    public void maoDePoker(){ // essa função sera responsável por simular uma mão de poker
-        ArrayList<Players> playersNoCampeonato = new ArrayList<>();
-        ArrayList<Players> playersNaMesa = new ArrayList<>();
+    public void loopDeMaos(){
         pegarTodosParticipantes(playersNoCampeonato);
+        while (playersNoCampeonato.size() > 1) {
+            maoDePoker();
+        }
+    }
+
+    public void maoDePoker(){ // essa função sera responsável por simular uma mão de poker
         int i, j, tamanhoDoPote, valorDoBB = 20, valorDoSB = 10; // numero de fichas do pote e tamanho do big blind e small blind no momento
         int valorAposta; // variavel que armazena o valor co 2bet
-        while (playersNoCampeonato.size() > 1){
             encherMesa(playersNoCampeonato, playersNaMesa);
             while (playersNaMesa.size() > 1) {
                 for (i = 0; i < playersNaMesa.size(); i++) { // for executa ate rodar a mesa por completo (o primeiro cara ser big brind 2ª vez)
@@ -128,7 +133,6 @@ public class MesaDePoker {
             System.out.println(playersNoCampeonato);
             playersNaMesa.clear();
             //new Scanner(System.in).next();
-        }
         System.out.println(playersNoCampeonato);
 
 
