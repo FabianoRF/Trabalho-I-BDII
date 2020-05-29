@@ -12,7 +12,7 @@ public class MesaDePoker {
     }
 
     public void loopDeMaos(){
-        pegarTodosParticipantes(playersNoCampeonato);
+        pegarTodosParticipantes();
         while (playersNoCampeonato.size() > 1) {
             maoDePoker();
         }
@@ -21,7 +21,7 @@ public class MesaDePoker {
     public void maoDePoker(){ // essa função sera responsável por simular uma mão de poker
         int i, j, tamanhoDoPote, valorDoBB = 20, valorDoSB = 10; // numero de fichas do pote e tamanho do big blind e small blind no momento
         int valorAposta; // variavel que armazena o valor co 2bet
-            encherMesa(playersNoCampeonato, playersNaMesa);
+            encherMesa();
             while (playersNaMesa.size() > 1) {
                 for (i = 0; i < playersNaMesa.size(); i++) { // for executa ate rodar a mesa por completo (o primeiro cara ser big brind 2ª vez)
                     valorAposta = 0; // o valor da aposta tem que ser zerado a cada mão
@@ -137,13 +137,13 @@ public class MesaDePoker {
 
 
     }
-    private void pegarTodosParticipantes(ArrayList<Players> playersNoCampeonato) {
+    private void pegarTodosParticipantes() {
         for(int i = 0; i < NUMERO_DE_INSCRITOS; i++){
             playersNoCampeonato.add(new Players("player" + (i + 1), 30000));
         }
     }
 
-    private void encherMesa(ArrayList<Players> playersNoCampeonato, ArrayList<Players> playersNaMesa) {
+    private void encherMesa() {
         playersNaMesa.clear();
         int i, j, c = 0;
         for (i = 0; i < 9; i++){
