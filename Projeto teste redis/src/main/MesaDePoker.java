@@ -12,22 +12,23 @@ public class MesaDePoker {
     }
 
     public void loopDeMaos(){
-        pegarTodosParticipantes();
         while (playersNoCampeonato.size() > 1) {
             rodadeDeMesa();
         }
     }
 
     public void rodadeDeMesa(){ // essa função sera responsável por simular uma mão de poker
-            encherMesa();
-            while (playersNaMesa.size() > 1) {
-                maoDePoker();
-            }
-            System.out.println(playersNaMesa.get(0).nome);
-            playersNoCampeonato.add(playersNaMesa.get(0));
-            System.out.println(playersNoCampeonato);
-            playersNaMesa.clear();
-            //new Scanner(System.in).next();
+        //pegarTodosParticipantes();
+        //encherMesa();
+        gerarParticipates();
+        while (playersNaMesa.size() > 1) {
+            maoDePoker();
+        }
+        System.out.println(playersNaMesa.get(0).nome);
+        playersNoCampeonato.add(playersNaMesa.get(0));
+        System.out.println(playersNoCampeonato);
+        playersNaMesa.clear();
+        //new Scanner(System.in).next();
         System.out.println(playersNoCampeonato);
     }
 
@@ -145,6 +146,12 @@ public class MesaDePoker {
     private void pegarTodosParticipantes() {
         for(int i = 0; i < NUMERO_DE_INSCRITOS; i++){
             playersNoCampeonato.add(new Players("player" + (i + 1), 30000));
+        }
+    }
+
+    private void gerarParticipates() {
+        for(int i = 0; i < NUMERO_DE_INSCRITOS; i++){
+            playersNaMesa.add(new Players("player" + (i + 1), 30000));
         }
     }
 
