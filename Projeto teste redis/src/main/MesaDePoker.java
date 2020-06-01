@@ -81,16 +81,7 @@ public class MesaDePoker {
                     }
                 }
             }
-            if (listaDeApostadores.size() > 0) { // verifica se ouve apostas na mão
-                int r = new Random().nextInt(listaDeApostadores.size()); // sorteia um valor dentre o numero de jagadores da mão
-                playersNaMesa.get(listaDeApostadores.get(r)).stack += tamanhoDoPote;
-            } else {  // caso não tenha ocorrido aposta o pote vai para o big blind
-                if (i < playersNaMesa.size() - 1) {
-                    playersNaMesa.get(i + 1).stack += tamanhoDoPote;
-                } else {
-                    playersNaMesa.get(0).stack += tamanhoDoPote;
-                }
-            }
+            determinarVencedorDaMao(i, listaDeApostadores);
             System.out.println(listaDeApostadores + " " + tamanhoDoPote);
             // limpeza do small e big
             if (i < playersNaMesa.size() - 1) {
@@ -120,6 +111,19 @@ public class MesaDePoker {
             c += paoDeQueijo.stack;
         }
         System.out.println(c);
+    }
+
+    private void determinarVencedorDaMao(int i, ArrayList<Integer> listaDeApostadores) {
+        if (listaDeApostadores.size() > 0) { // verifica se ouve apostas na mão
+            int r = new Random().nextInt(listaDeApostadores.size()); // sorteia um valor dentre o numero de jagadores da mão
+            playersNaMesa.get(listaDeApostadores.get(r)).stack += tamanhoDoPote;
+        } else {  // caso não tenha ocorrido aposta o pote vai para o big blind
+            if (i < playersNaMesa.size() - 1) {
+                playersNaMesa.get(i + 1).stack += tamanhoDoPote;
+            } else {
+                playersNaMesa.get(0).stack += tamanhoDoPote;
+            }
+        }
     }
 
     private void darCall(int j) {
