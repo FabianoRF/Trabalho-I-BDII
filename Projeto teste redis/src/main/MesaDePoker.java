@@ -4,17 +4,15 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class MesaDePoker {
-    private final int NUMERO_DE_INSCRITOS = 9;
+    private int numeroDeInscritos;
     private ArrayList<Players> playersNoCampeonato = new ArrayList<>();
+    private int valorDoBB, valorDoSB;
     ArrayList<Players> playersNaMesa = new ArrayList<>();
 
     public MesaDePoker() {
-    }
-
-    public void loopDeMaos(){
-        while (playersNoCampeonato.size() > 1) {
-            rodadeDeMesa();
-        }
+        numeroDeInscritos = 9;
+        valorDoBB = 20;
+        valorDoSB = 10;
     }
 
     public void rodadeDeMesa(){ // essa função sera responsável por simular uma mão de poker
@@ -34,24 +32,13 @@ public class MesaDePoker {
 
     public void maoDePoker(){
         int i, j;
-        int tamanhoDoPote, valorDoBB = 20, valorDoSB = 10; // numero de fichas do pote e tamanho do big blind e small blind no momento
+        int tamanhoDoPote; // numero de fichas do pote e tamanho do big blind e small blind no momento
         // variavel que armazena o valor co 2bet
         int valorAposta;
         for (i = 0; i < playersNaMesa.size(); i++) { // for executa ate rodar a mesa por completo (o primeiro cara ser big brind 2ª vez)
             valorAposta = 0; // o valor da aposta tem que ser zerado a cada mão
             tamanhoDoPote = valorDoBB + valorDoSB;
-            if (i < playersNaMesa.size() - 1) { // verifica se o small blind esta no final da mesa (caso isso ocorra o jogo pode estourar a lista)
-                // tanto if quanto else retirão valor do stack dos blinds  abilitão os atributos de blind
-                playersNaMesa.get(i).stack -= valorDoSB;
-                playersNaMesa.get(i + 1).stack -= valorDoBB;
-                playersNaMesa.get(i).smallBlind = true;
-                playersNaMesa.get(i + 1).bigBlind = true;
-            } else {
-                playersNaMesa.get(i).stack -= valorDoSB;
-                playersNaMesa.get(0).stack -= valorDoBB;
-                playersNaMesa.get(i).smallBlind = true;
-                playersNaMesa.get(0).bigBlind = true;
-            }
+            habilitaBlinds(i); // tira o stack dos blinds
             ArrayList<Integer> listaDeApostadores = new ArrayList<>(); /* essa lista armazena o indice de todos os jodadores que
             entrão na mão (indices da players na mesa), para que depois seja atribuida de forma aleatória quem venceu
             a mão */
@@ -60,12 +47,12 @@ public class MesaDePoker {
                 Random random = new Random();
                 int limiteDaApos;
                 int r = random.nextInt(100);
-                if (playersNoCampeonato.size() >= NUMERO_DE_INSCRITOS / 9){
-                    limiteDaApos = 500 * valorDoBB - valorDoBB;
-                }else if (playersNaMesa.size() >= NUMERO_DE_INSCRITOS/81){
-                    limiteDaApos = 2000 * valorDoBB - valorDoBB;
+                if (playersNoCampeonato.size() >= numeroDeInscritos / 9){
+                    limiteDaApos = 50 * valorDoBB - valorDoBB;
+                }else if (playersNaMesa.size() >= numeroDeInscritos /81){
+                    limiteDaApos = 200 * valorDoBB - valorDoBB;
                 } else {
-                    limiteDaApos = 5000 * valorDoBB - valorDoBB;
+                    limiteDaApos = 500 * valorDoBB - valorDoBB;
                 }
                 // é sorteado o valor da aposta, sendo que o r tem que ser de 25, para dar mais realidade ao VPIP
                 if (valorAposta == 0) { // verifica se não há apostas previas, pois caso hajá os jogaores não poderam
@@ -143,14 +130,29 @@ public class MesaDePoker {
         System.out.println(c);
     }
 
+    private void habilitaBlinds(int i) {
+        if (i < playersNaMesa.size() - 1) { // verifica se o small blind esta no final da mesa (caso isso ocorra o jogo pode estourar a lista)
+            // tanto if quanto else retirão valor do stack dos blinds  abilitão os atributos de blind
+            playersNaMesa.get(i).stack -= valorDoSB;
+            playersNaMesa.get(i + 1).stack -= valorDoBB;
+            playersNaMesa.get(i).smallBlind = true;
+            playersNaMesa.get(i + 1).bigBlind = true;
+        } else {
+            playersNaMesa.get(i).stack -= valorDoSB;
+            playersNaMesa.get(0).stack -= valorDoBB;
+            playersNaMesa.get(i).smallBlind = true;
+            playersNaMesa.get(0).bigBlind = true;
+        }
+    }
+
     private void pegarTodosParticipantes() {
-        for(int i = 0; i < NUMERO_DE_INSCRITOS; i++){
+        for(int i = 0; i < numeroDeInscritos; i++){
             playersNoCampeonato.add(new Players("player" + (i + 1), 30000));
         }
     }
 
     private void gerarParticipates() {
-        for(int i = 0; i < NUMERO_DE_INSCRITOS; i++){
+        for(int i = 0; i < numeroDeInscritos; i++){
             playersNaMesa.add(new Players("player" + (i + 1), 30000));
         }
     }
