@@ -18,10 +18,25 @@ public class MesaDePoker {
         valorDoSB = 10;
     }
 
+    public MesaDePoker(int numeroDeInscritos, int valorDoBB, int valorDoSB, ArrayList<Players> playersNaMesa) {
+        this.numeroDeInscritos = numeroDeInscritos;
+        this.valorDoBB = valorDoBB;
+        this.valorDoSB = valorDoSB;
+        this.playersNaMesa = playersNaMesa;
+    }
+
     public MesaDePoker(int numeroDeInscritos, int valorDoBB, int valorDoSB) {
         this.numeroDeInscritos = numeroDeInscritos;
         this.valorDoBB = valorDoBB;
         this.valorDoSB = valorDoSB;
+    }
+
+    public ArrayList<Players> getPlayersNaMesa() {
+        return playersNaMesa;
+    }
+
+    public void setPlayersNaMesa(ArrayList<Players> playersNaMesa) {
+        this.playersNaMesa = playersNaMesa;
     }
 
     public void rodadeDeMesa(){ // essa função sera responsável por simular uma mão de poker
@@ -55,30 +70,13 @@ public class MesaDePoker {
                 int r = random.nextInt(100);
                 limiteDaApos = definirLimitesDeApostas();
                 // é sorteado o valor da aposta, sendo que o r tem que ser de 25, para dar mais realidade ao VPIP
-                if (valorAposta == 0) { // verifica se não há apostas previas, pois caso hajá os jogaores não poderam
-                    // dar 3bet
+                if (valorAposta == 0) { // verifica se não há apostas previas, pois caso hajá os jogaores não poderam dar 3bet
                     if (r < 25) {
                         fazerAposta(j, limiteDaApos, listaDeApostadores);
                     }
                 } else if (r < 25) { // caso hajá apostas os outros players podem apenas dar call
                     if (playersNaMesa.get(j).stack > 0) { // verifica se o jogador tem stack efetiva
-                        if (valorAposta <= playersNaMesa.get(j).stack) { // verifica se player tem stack para dar call
-                            // a condição verifica se o player esta em uma das blinds ou, porque quem esta nas blinds
-                            // tem o valor da aposta descontado do valor que já pagou nas blinds
-                            if (playersNaMesa.get(j).bigBlind) {
-                                playersNaMesa.get(j).stack -= valorAposta - valorDoBB;
-                                tamanhoDoPote += valorAposta - valorDoBB;
-                            } else if (playersNaMesa.get(j).smallBlind) {
-                                playersNaMesa.get(j).stack -= valorAposta - valorDoSB;
-                                tamanhoDoPote += valorAposta - valorDoSB;
-                            } else {
-                                playersNaMesa.get(j).stack -= valorAposta;
-                                tamanhoDoPote += valorAposta;
-                            }
-                        } else { // caso não tenha stack, o jogador deve ir all - in
-                            tamanhoDoPote += playersNaMesa.get(j).stack;
-                            playersNaMesa.get(j).stack = 0;
-                        }
+                        darCall(j);
                         listaDeApostadores.add(j);
                     }
                 }
@@ -122,6 +120,26 @@ public class MesaDePoker {
             c += paoDeQueijo.stack;
         }
         System.out.println(c);
+    }
+
+    private void darCall(int j) {
+        if (valorAposta <= playersNaMesa.get(j).stack) { // verifica se player tem stack para dar call
+            // a condição verifica se o player esta em uma das blinds ou, porque quem esta nas blinds
+            // tem o valor da aposta descontado do valor que já pagou nas blinds
+            if (playersNaMesa.get(j).bigBlind) {
+                playersNaMesa.get(j).stack -= valorAposta - valorDoBB;
+                tamanhoDoPote += valorAposta - valorDoBB;
+            } else if (playersNaMesa.get(j).smallBlind) {
+                playersNaMesa.get(j).stack -= valorAposta - valorDoSB;
+                tamanhoDoPote += valorAposta - valorDoSB;
+            } else {
+                playersNaMesa.get(j).stack -= valorAposta;
+                tamanhoDoPote += valorAposta;
+            }
+        } else { // caso não tenha stack, o jogador deve ir all - in
+            tamanhoDoPote += playersNaMesa.get(j).stack;
+            playersNaMesa.get(j).stack = 0;
+        }
     }
 
     private void fazerAposta(int j, int limiteDaApos, ArrayList<Integer> listaDeApostadores) {
