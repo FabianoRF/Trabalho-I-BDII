@@ -47,13 +47,7 @@ public class MesaDePoker {
                 Random random = new Random();
                 int limiteDaApos;
                 int r = random.nextInt(100);
-                if (playersNoCampeonato.size() >= numeroDeInscritos / 9){
-                    limiteDaApos = 50 * valorDoBB - valorDoBB;
-                }else if (playersNaMesa.size() >= numeroDeInscritos /81){
-                    limiteDaApos = 200 * valorDoBB - valorDoBB;
-                } else {
-                    limiteDaApos = 500 * valorDoBB - valorDoBB;
-                }
+                limiteDaApos = definirLimitesDeApostas();
                 // é sorteado o valor da aposta, sendo que o r tem que ser de 25, para dar mais realidade ao VPIP
                 if (valorAposta == 0) { // verifica se não há apostas previas, pois caso hajá os jogaores não poderam
                     // dar 3bet
@@ -128,6 +122,16 @@ public class MesaDePoker {
             c += paoDeQueijo.stack;
         }
         System.out.println(c);
+    }
+
+    private int definirLimitesDeApostas() {
+        if (playersNoCampeonato.size() >= numeroDeInscritos / 9){
+            return 50 * valorDoBB - valorDoBB;
+        }else if (playersNaMesa.size() >= numeroDeInscritos /81){
+            return  200 * valorDoBB - valorDoBB;
+        } else {
+            return 500 * valorDoBB - valorDoBB;
+        }
     }
 
     private void habilitaBlinds(int i) {
