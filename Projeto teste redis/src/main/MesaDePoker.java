@@ -7,12 +7,21 @@ public class MesaDePoker {
     private int numeroDeInscritos;
     private ArrayList<Players> playersNoCampeonato = new ArrayList<>();
     private int valorDoBB, valorDoSB;
+    private int tamanhoDoPote; // numero de fichas do pote e tamanho do big blind e small blind no momento
+    // variavel que armazena o valor co 2bet
+    private int valorAposta;
     ArrayList<Players> playersNaMesa = new ArrayList<>();
 
     public MesaDePoker() {
         numeroDeInscritos = 9;
         valorDoBB = 20;
         valorDoSB = 10;
+    }
+
+    public MesaDePoker(int numeroDeInscritos, int valorDoBB, int valorDoSB) {
+        this.numeroDeInscritos = numeroDeInscritos;
+        this.valorDoBB = valorDoBB;
+        this.valorDoSB = valorDoSB;
     }
 
     public void rodadeDeMesa(){ // essa função sera responsável por simular uma mão de poker
@@ -32,9 +41,6 @@ public class MesaDePoker {
 
     public void maoDePoker(){
         int i, j;
-        int tamanhoDoPote; // numero de fichas do pote e tamanho do big blind e small blind no momento
-        // variavel que armazena o valor co 2bet
-        int valorAposta;
         for (i = 0; i < playersNaMesa.size(); i++) { // for executa ate rodar a mesa por completo (o primeiro cara ser big brind 2ª vez)
             valorAposta = 0; // o valor da aposta tem que ser zerado a cada mão
             tamanhoDoPote = valorDoBB + valorDoSB;
@@ -52,13 +58,7 @@ public class MesaDePoker {
                 if (valorAposta == 0) { // verifica se não há apostas previas, pois caso hajá os jogaores não poderam
                     // dar 3bet
                     if (r < 25) {
-                        if (playersNaMesa.get(j).stack > 0 && playersNaMesa.get(j).stack > valorDoBB) { // verifica que o jogador tem stack efetiva
-                            // o valor minimo de aposta, deve ser de 1 Big Blind, e no maximo um all in
-                            valorAposta = valorDoBB + random.nextInt(limiteDaApos);
-                            playersNaMesa.get(j).stack -= valorAposta; // desconta aposta do stack
-                            tamanhoDoPote += valorAposta; // almenta o tamanhoDoPote
-                            listaDeApostadores.add(j); // adiciona o indice do jogador na lista
-                        }
+                        fazerAposta(j, limiteDaApos, listaDeApostadores);
                     }
                 } else if (r < 25) { // caso hajá apostas os outros players podem apenas dar call
                     if (playersNaMesa.get(j).stack > 0) { // verifica se o jogador tem stack efetiva
@@ -122,6 +122,17 @@ public class MesaDePoker {
             c += paoDeQueijo.stack;
         }
         System.out.println(c);
+    }
+
+    private void fazerAposta(int j, int limiteDaApos, ArrayList<Integer> listaDeApostadores) {
+        Random random = new Random();
+        if (playersNaMesa.get(j).stack > 0 && playersNaMesa.get(j).stack > valorDoBB) { // verifica que o jogador tem stack efetiva
+            // o valor minimo de aposta, deve ser de 1 Big Blind, e no maximo um all in
+            valorAposta = valorDoBB + random.nextInt(limiteDaApos);
+            playersNaMesa.get(j).stack -= valorAposta; // desconta aposta do stack
+            tamanhoDoPote += valorAposta; // almenta o tamanhoDoPote
+            listaDeApostadores.add(j); // adiciona o indice do jogador na lista
+        }
     }
 
     private int definirLimitesDeApostas() {
