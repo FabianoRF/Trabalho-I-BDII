@@ -38,6 +38,9 @@ public class Main {
         }catch(Exception e) {
             System.out.println(e);
         }
+        MesaDePoker mesaDePoker = new MesaDePoker();
+
+       mesaDePoker.rodadeDeMesa();
         //maoDePoker();
     }
 
