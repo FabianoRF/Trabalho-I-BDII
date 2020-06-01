@@ -84,24 +84,9 @@ public class MesaDePoker {
             determinarVencedorDaMao(i, listaDeApostadores);
             System.out.println(listaDeApostadores + " " + tamanhoDoPote);
             // limpeza do small e big
-            if (i < playersNaMesa.size() - 1) {
-                playersNaMesa.get(i).smallBlind = false;
-                playersNaMesa.get(i + 1).bigBlind = false;
-            } else {
-                playersNaMesa.get(i).smallBlind = false;
-                playersNaMesa.get(0).bigBlind = false;
-            }
+            limparBlinds(i);
             // remove os jogadores sem stack (jogadores eliminados)
-            for (int k = 0; k < playersNaMesa.size(); k++) {
-                int aux = 0;
-                if (playersNaMesa.get(k).stack == 0) {
-                    playersNaMesa.remove(k);
-                } else if (playersNaMesa.get(k).stack < 0) {
-                    aux = playersNaMesa.get(k).stack;
-                    playersNaMesa.remove(k);
-                }
-                playersNaMesa.get(0).stack += aux;
-            }
+            removerPlayerSemStack();
         }
         // teste: mostra o stack dos players, bem como se o pote continua com o mesmo numero de fichas
         System.out.println();
@@ -111,6 +96,29 @@ public class MesaDePoker {
             c += paoDeQueijo.stack;
         }
         System.out.println(c);
+    }
+
+    private void removerPlayerSemStack() {
+        for (int k = 0; k < playersNaMesa.size(); k++) {
+            int aux = 0;
+            if (playersNaMesa.get(k).stack == 0) {
+                playersNaMesa.remove(k);
+            } else if (playersNaMesa.get(k).stack < 0) {
+                aux = playersNaMesa.get(k).stack;
+                playersNaMesa.remove(k);
+            }
+            playersNaMesa.get(0).stack += aux;
+        }
+    }
+
+    private void limparBlinds(int i) {
+        if (i < playersNaMesa.size() - 1) {
+            playersNaMesa.get(i).smallBlind = false;
+            playersNaMesa.get(i + 1).bigBlind = false;
+        } else {
+            playersNaMesa.get(i).smallBlind = false;
+            playersNaMesa.get(0).bigBlind = false;
+        }
     }
 
     private void determinarVencedorDaMao(int i, ArrayList<Integer> listaDeApostadores) {
