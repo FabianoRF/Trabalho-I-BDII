@@ -46,12 +46,10 @@ public class MesaDePoker {
         while (playersNaMesa.size() > 1) {
             maoDePoker();
         }
-        System.out.println(playersNaMesa.get(0).nome);
+        imprimirJogadores(playersNaMesa);
         playersNoCampeonato.add(playersNaMesa.get(0));
-        System.out.println(playersNoCampeonato);
         playersNaMesa.clear();
-        //new Scanner(System.in).next();
-        System.out.println(playersNoCampeonato);
+        //imprimirJogadores(playersNoCampeonato);
     }
 
     public void maoDePoker(){
@@ -82,21 +80,23 @@ public class MesaDePoker {
                 }
             }
             determinarVencedorDaMao(i, listaDeApostadores);
-            System.out.println(listaDeApostadores + " " + tamanhoDoPote);
+            //System.out.println(listaDeApostadores + " " + tamanhoDoPote);
             // limpeza do small e big
             limparBlinds(i);
             // remove os jogadores sem stack (jogadores eliminados)
             removerPlayerSemStack();
         }
         // teste: mostra o stack dos players, bem como se o pote continua com o mesmo numero de fichas
-        System.out.println();
-        int c = 0;
-        for (Players paoDeQueijo : playersNaMesa) {
-            System.out.print(paoDeQueijo.stack + "\t");
-            c += paoDeQueijo.stack;
-        }
-        System.out.println(c);
+        imprimirJogadores(playersNaMesa);
     }
+
+    private void imprimirJogadores(ArrayList<Players> players) {
+        System.out.println();
+        for (Players p : players) {
+            System.out.printf("Nome: %s, Stack: %d\n", p.nome, p.stack);
+        }
+    }
+
 
     private void removerPlayerSemStack() {
         for (int k = 0; k < playersNaMesa.size(); k++) {
