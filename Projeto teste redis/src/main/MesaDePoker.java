@@ -42,7 +42,8 @@ public class MesaDePoker {
     public void rodadeDeMesa(){ // essa função sera responsável por simular uma mão de poker
         //pegarTodosParticipantes();
         //encherMesa();
-        gerarParticipates();
+        if(playersNaMesa.size() == 0)
+            gerarParticipates();
         while (playersNaMesa.size() > 1) {
             maoDePoker();
         }
