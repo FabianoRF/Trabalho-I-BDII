@@ -1,0 +1,8 @@
+[33mfb09e63[m[33m ([m[1;36mHEAD -> [m[1;32minterface[m[33m)[m programa inicial
+[33m87ca52b[m[33m ([m[1;32mmaster[m[33m)[m teste
+[33m4a94713[m[33m ([m[1;31morigin/carlin[m[33m)[m versão finalizada de troneio de poker de multiplos satelites
+[33m807c3c4[m almento das fichas iniciais, limitação de apostas de no maximo 100 BB
+[33meefe280[m adição de comentarios, correção de bug de stack negativo, adição de big blinds
+[33m3e8fa7d[m Como usar listas no jedis
+[33medb7550[m Projeto de teste funcionando
+[33md1fb4b0[m Primeiro commit com as tarefas.txt

@@ -7,9 +7,7 @@ import java.util.List;
 import java.util.Random;
 
 public class Main {
-    
     private static final int NUMERO_DE_INSCRITOS = 900;
-
     public static void main(String[] args) {
 
         try {
@@ -34,11 +32,16 @@ public class Main {
             for (int i=0;i<lista1.size();i++){
                 System.out.println("Imprimindo lista: " + lista1.get(i));
             }
-            
+
+
+
+
         }catch(Exception e) {
             System.out.println(e);
         }
         maoDePoker();
+
+
     }
 
     public static void maoDePoker(){ // essa função sera responsável por simular uma mão de poker
@@ -47,7 +50,6 @@ public class Main {
         pegarTodosParticipantes(playersNoCampeonato);
         int i, j, tamanhoDoPote, valorDoBB = 20, valorDoSB = 10; // numero de fichas do pote e tamanho do big blind e small blind no momento
         int valorAposta; // variavel que armazena o valor co 2bet
-
         while (playersNoCampeonato.size() > 1){
             encherMesa(playersNoCampeonato, playersNaMesa);
             while (playersNaMesa.size() > 1) {
