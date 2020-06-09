@@ -39,13 +39,13 @@ public class MesaDePoker {
         this.playersNaMesa = playersNaMesa;
     }
 
-    public void rodadeDeMesa(){ // essa função sera responsável por simular uma mão de poker
+    public void loopDeRotacaoDasBlinds(){ // essa função sera responsável por simular uma mão de poker
         //pegarTodosParticipantes();
         //encherMesa();
         if(playersNaMesa.size() == 0)
             gerarParticipates();
         while (playersNaMesa.size() > 1) {
-            maoDePoker();
+            rotacaoDeBlinds();
         }
         imprimirJogadores(playersNaMesa);
         playersNoCampeonato.add(playersNaMesa.get(0));
@@ -53,8 +53,8 @@ public class MesaDePoker {
         //imprimirJogadores(playersNoCampeonato);
     }
 
-    public void maoDePoker(){
-        int i, j;
+    public void rotacaoDeBlinds(){
+        int i;
         for (i = 0; i < playersNaMesa.size(); i++) { // for executa ate rodar a mesa por completo (o primeiro cara ser big brind 2ª vez)
             valorAposta = 0; // o valor da aposta tem que ser zerado a cada mão
             tamanhoDoPote = valorDoBB + valorDoSB;
@@ -62,24 +62,7 @@ public class MesaDePoker {
             ArrayList<Integer> listaDeApostadores = new ArrayList<>(); /* essa lista armazena o indice de todos os jodadores que
             entrão na mão (indices da players na mesa), para que depois seja atribuida de forma aleatória quem venceu
             a mão */
-            for (j = playersNaMesa.size() - 1; j >= 0; j--) { /* vai analizar quis jogadores vão entrar na mão, o
-                primeiro a falar (2bet), ditará o tamanho das apostas e os outros jogadore poderam apenas dar call*/
-                Random random = new Random();
-                int limiteDaApos;
-                int r = random.nextInt(100);
-                limiteDaApos = definirLimitesDeApostas();
-                // é sorteado o valor da aposta, sendo que o r tem que ser de 25, para dar mais realidade ao VPIP
-                if (valorAposta == 0) { // verifica se não há apostas previas, pois caso hajá os jogaores não poderam dar 3bet
-                    if (r < 25) {
-                        fazerAposta(j, limiteDaApos, listaDeApostadores);
-                    }
-                } else if (r < 25) { // caso hajá apostas os outros players podem apenas dar call
-                    if (playersNaMesa.get(j).stack > 0) { // verifica se o jogador tem stack efetiva
-                        darCall(j);
-                        listaDeApostadores.add(j);
-                    }
-                }
-            }
+            rotacaoDeBlinds(listaDeApostadores);
             determinarVencedorDaMao(i, listaDeApostadores);
             //System.out.println(listaDeApostadores + " " + tamanhoDoPote);
             // limpeza do small e big
@@ -90,7 +73,26 @@ public class MesaDePoker {
         // teste: mostra o stack dos players, bem como se o pote continua com o mesmo numero de fichas
         imprimirJogadores(playersNaMesa);
     }
-
+    public void rotacaoDeBlinds(ArrayList<Integer> listaDeApostadores) {
+        for (int j = playersNaMesa.size() - 1; j >= 0; j--) { /* vai analizar quis jogadores vão entrar na mão, o
+                primeiro a falar (2bet), ditará o tamanho das apostas e os outros jogadore poderam apenas dar call*/
+            Random random = new Random();
+            int limiteDaApos;
+            int r = random.nextInt(100);
+            limiteDaApos = definirLimitesDeApostas();
+            // é sorteado o valor da aposta, sendo que o r tem que ser de 25, para dar mais realidade ao VPIP
+            if (valorAposta == 0) { // verifica se não há apostas previas, pois caso hajá os jogaores não poderam dar 3bet
+                if (r < 25) {
+                    fazerAposta(j, limiteDaApos, listaDeApostadores);
+                }
+            } else if (r < 25) { // caso hajá apostas os outros players podem apenas dar call
+                if (playersNaMesa.get(j).stack > 0) { // verifica se o jogador tem stack efetiva
+                    darCall(j);
+                    listaDeApostadores.add(j);
+                }
+            }
+        }
+    }
     private void imprimirJogadores(ArrayList<Players> players) {
         System.out.println();
         for (Players p : players) {
