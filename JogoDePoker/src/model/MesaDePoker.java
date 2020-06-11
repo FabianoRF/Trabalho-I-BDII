@@ -1,4 +1,4 @@
-package main;
+package model;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -10,7 +10,7 @@ public class MesaDePoker {
     private int tamanhoDoPote; // numero de fichas do pote e tamanho do big blind e small blind no momento
     // variavel que armazena o valor co 2bet
     private int valorAposta;
-    ArrayList<Players> playersNaMesa = new ArrayList<>();
+    public ArrayList<Players> playersNaMesa = new ArrayList<>();
 
     public MesaDePoker() {
         numeroDeInscritos = 9;
@@ -39,24 +39,9 @@ public class MesaDePoker {
         this.playersNaMesa = playersNaMesa;
     }
 
-    public void loopDeRotacaoDasBlinds(){ // essa função sera responsável por simular uma mão de poker
-        //pegarTodosParticipantes();
-        //encherMesa();
-        if(playersNaMesa.size() == 0)
-            gerarParticipates();
-        while (playersNaMesa.size() > 1) {
-            rotacaoDeBlinds();
-            imprimirJogadores(playersNaMesa);
-        }
 
-        System.out.println("Valor do players na mesaa   "+ this.getPlayersNaMesa());
-       // imprimirJogadores(playersNaMesa);
-        playersNoCampeonato.add(playersNaMesa.get(0));
-        playersNaMesa.clear();
-        //imprimirJogadores(playersNoCampeonato);
-    }
 
-    public void rotacaoDeBlinds(){
+    public ArrayList<Players> rotacaoDeBlinds(){
         int i;
         for (i = 0; i < playersNaMesa.size(); i++) { // for executa ate rodar a mesa por completo (o primeiro cara ser big brind 2ª vez)
             valorAposta = 0; // o valor da aposta tem que ser zerado a cada mão
@@ -75,6 +60,8 @@ public class MesaDePoker {
         }
         // teste: mostra o stack dos players, bem como se o pote continua com o mesmo numero de fichas
         //imprimirJogadores(playersNaMesa);
+        
+        return playersNaMesa;
     }
     public void rotacaoDeBlinds(ArrayList<Integer> listaDeApostadores) {
         for (int j = playersNaMesa.size() - 1; j >= 0; j--) { /* vai analizar quis jogadores vão entrar na mão, o
@@ -96,15 +83,15 @@ public class MesaDePoker {
             }
         }
     }
-    private void imprimirJogadores(ArrayList<Players> players) {
+    public void imprimirJogadores(ArrayList<Players> players, int id) {
         System.out.println();
         for (Players p : players) {
-            System.out.printf("Nome: %s, Stack: %d\n", p.nome, p.stack);
+            System.out.printf("Nome: %s, Stack: %d   id: %d\n", p.nome, p.stack, id);
         }
     }
 
 
-    private void removerPlayerSemStack() {
+    public void removerPlayerSemStack() {
         for (int k = 0; k < playersNaMesa.size(); k++) {
             int aux = 0;
             if (playersNaMesa.get(k).stack == 0) {
@@ -117,7 +104,7 @@ public class MesaDePoker {
         }
     }
 
-    private void limparBlinds(int i) {
+    public void limparBlinds(int i) {
         if (i < playersNaMesa.size() - 1) {
             playersNaMesa.get(i).smallBlind = false;
             playersNaMesa.get(i + 1).bigBlind = false;
@@ -127,7 +114,7 @@ public class MesaDePoker {
         }
     }
 
-    private void determinarVencedorDaMao(int i, ArrayList<Integer> listaDeApostadores) {
+    public void determinarVencedorDaMao(int i, ArrayList<Integer> listaDeApostadores) {
         if (listaDeApostadores.size() > 0) { // verifica se ouve apostas na mão
             int r = new Random().nextInt(listaDeApostadores.size()); // sorteia um valor dentre o numero de jagadores da mão
             playersNaMesa.get(listaDeApostadores.get(r)).stack += tamanhoDoPote;
@@ -140,7 +127,7 @@ public class MesaDePoker {
         }
     }
 
-    private void darCall(int j) {
+    public void darCall(int j) {
         if (valorAposta <= playersNaMesa.get(j).stack) { // verifica se player tem stack para dar call
             // a condição verifica se o player esta em uma das blinds ou, porque quem esta nas blinds
             // tem o valor da aposta descontado do valor que já pagou nas blinds
@@ -202,7 +189,7 @@ public class MesaDePoker {
         }
     }
 
-    private void gerarParticipates() {
+    public void gerarParticipates() {
         for(int i = 0; i < numeroDeInscritos; i++){
             playersNaMesa.add(new Players("player" + (i + 1), 30000));
         }
@@ -223,6 +210,22 @@ public class MesaDePoker {
         for (j = 0; j < c; j++){
             playersNoCampeonato.remove(0);
         }
+    }
+
+    public int getNumeroDeInscritos() {
+        return numeroDeInscritos;
+    }
+
+    public void setNumeroDeInscritos(int numeroDeInscritos) {
+        this.numeroDeInscritos = numeroDeInscritos;
+    }
+
+    public ArrayList<Players> getPlayersNoCampeonato() {
+        return playersNoCampeonato;
+    }
+
+    public void setPlayersNoCampeonato(ArrayList<Players> playersNoCampeonato) {
+        this.playersNoCampeonato = playersNoCampeonato;
     }
 
 }
