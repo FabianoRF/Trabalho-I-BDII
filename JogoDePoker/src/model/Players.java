@@ -20,4 +20,40 @@ public class Players{
                 ", stack=" + stack +
                 '}';
     }
+
+    public Players() {
+    }
+
+    public int getStack() {
+        return stack;
+    }
+
+    public void setStack(int stack) {
+        this.stack = stack;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public boolean isBigBlind() {
+        return bigBlind;
+    }
+
+    public void setBigBlind(boolean bigBlind) {
+        this.bigBlind = bigBlind;
+    }
+
+    public boolean isSmallBlind() {
+        return smallBlind;
+    }
+
+    public void setSmallBlind(boolean smallBlind) {
+        this.smallBlind = smallBlind;
+    }
+    
 }
