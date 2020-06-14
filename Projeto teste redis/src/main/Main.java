@@ -1,8 +1,8 @@
 package main;
 
 import redis.clients.jedis.Jedis;
-
 import java.util.List;
+
 
 public class Main {
     public static void main(String[] args) {
@@ -24,10 +24,25 @@ public class Main {
             jedis.lpush("lista1", "maria");
             jedis.lpush("lista1", "Leao");
             jedis.lpush("lista1", "laranja");
-            List<String> lista1=jedis.lrange("lista1", 0, 4);
+            List<String> lista1=jedis.lrange("lista1", 0, 3);
+
+            System.out.println(lista1.get(3));
 
             for (int i=0;i<lista1.size();i++){
                 System.out.println("Imprimindo lista: " + lista1.get(i));
+            }
+
+            //colocando uma lista
+            jedis.lpush("lista1", "Jõa2o");
+            jedis.lpush("lista1", "mari22a");
+            jedis.lpush("lista1", "Lea23");
+
+            lista1=jedis.lrange("lista1", 0, 2);
+
+           // System.out.println(lista1.get(3));
+
+            for (int i=0;i<lista1.size();i++){
+                System.out.println("Imprimindo lista segunda: " + lista1.get(i));
             }
 
 
@@ -38,7 +53,7 @@ public class Main {
         }
         MesaDePoker mesaDePoker = new MesaDePoker();
 
-       mesaDePoker.loopDeRotacaoDasBlinds();
+     //  mesaDePoker.loopDeRotacaoDasBlinds();
         //maoDePoker();
     }
 

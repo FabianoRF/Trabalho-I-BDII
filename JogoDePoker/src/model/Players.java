@@ -1,11 +1,13 @@
 package model;
+
+
 public class Players{
     public int stack; // numero de fichas que ele possui
-    public String nome; // nome do jogado
-    public boolean bigBlind; // marca se ele é big blid nessa mão
+    public String nome; // nome do jogador
+    public String nomeStack; // para jogar concatenado
+    public boolean bigBlind; // mrca se ele é big blid nessa mão
     public boolean smallBlind;// marca se ele é small blid nessa mão
-
-
+    
     public Players(String nome, int stack) {
         this.nome = nome;
         this.stack = stack;
@@ -56,4 +58,11 @@ public class Players{
         this.smallBlind = smallBlind;
     }
     
+     public String getNomeStack() {
+        return nomeStack;
+    }
+
+    public void setNomeStack(String nomeStack) {
+        this.nomeStack = nomeStack;
+    }
 }

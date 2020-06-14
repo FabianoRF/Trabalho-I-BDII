@@ -415,7 +415,7 @@ public class TelaMesas extends javax.swing.JFrame {
     }//GEN-LAST:event_btnMesa4ActionPerformed
 
     private void btnMesa5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMesa5ActionPerformed
-         Players p=new Players();
+         Players p;
         
         DefaultTableModel modelo = (DefaultTableModel) tbMesa5.getModel();
         modelo.setNumRows(0);

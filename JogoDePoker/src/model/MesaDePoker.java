@@ -3,6 +3,7 @@ package model;
 import java.util.ArrayList;
 import java.util.Random;
 
+
 public class MesaDePoker {
     private int numeroDeInscritos;
     private ArrayList<Players> playersNoCampeonato = new ArrayList<>();
@@ -41,6 +42,7 @@ public class MesaDePoker {
 
 
 
+    
     public ArrayList<Players> rotacaoDeBlinds(){
         int i;
         for (i = 0; i < playersNaMesa.size(); i++) { // for executa ate rodar a mesa por completo (o primeiro cara ser big brind 2ª vez)
@@ -57,12 +59,27 @@ public class MesaDePoker {
             limparBlinds(i);
             // remove os jogadores sem stack (jogadores eliminados)
             removerPlayerSemStack();
+            
         }
         // teste: mostra o stack dos players, bem como se o pote continua com o mesmo numero de fichas
         //imprimirJogadores(playersNaMesa);
         
+        concatenaPlayer();
         return playersNaMesa;
     }
+    
+    public void concatenaPlayer(){//Função para concatenar o nome e o stack para jogar no banco 
+         int i=0;
+         String nomeConcat;
+         for (i = 0; i < playersNaMesa.size() ; i++) {
+            nomeConcat = playersNaMesa.get(i).getNome().concat(","+playersNaMesa.get(i).getStack());
+            playersNaMesa.get(i).setNomeStack(nomeConcat);
+        }
+        
+        
+    
+    }
+    
     public void rotacaoDeBlinds(ArrayList<Integer> listaDeApostadores) {
         for (int j = playersNaMesa.size() - 1; j >= 0; j--) { /* vai analizar quis jogadores vão entrar na mão, o
                 primeiro a falar (2bet), ditará o tamanho das apostas e os outros jogadore poderam apenas dar call*/
@@ -88,6 +105,7 @@ public class MesaDePoker {
         for (Players p : players) {
             System.out.printf("Nome: %s, Stack: %d   id: %d\n", p.nome, p.stack, id);
         }
+        System.out.println("\n");
     }
 
 
